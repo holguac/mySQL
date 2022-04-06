@@ -1,25 +1,41 @@
 require("dotenv").config();
 require("./connection");
 
+const yargs = require("yargs");
+const { hideBin } = require("yargs/helpers");
+const argv = yargs(hideBin(process.argv)).argv;
+
 const Artist = require("./models/artist");
 const Album = require("./models/album");
 const Song = require("./models/song");
+const { addAlbum, addArtist, addSong } = require("./utils/add");
+const { deleteAlbum, deleteArtist, deleteSong, deleteAll } = require("./utils/delete");
+const { findAlbum, findArtist, findSong, findALl } = require("./utils/find");
+const { updateAlbum, updateArtist, updateSong } = require("./utils/update");
 
-// Basically our main() function
-(async () => {
-    await Artist.sync({alter: true});
-    await Album.sync({alter: true});
-    await Song.sync({alter: true});
-
-    const artist = await Artist.create({name: "Boy Harsher"});
-    const album = await Album.create({name: "Careful", ArtistId: artist.id});
-    const song = await Song.create({name: "LA", AlbumId: album.id});
-
-    for (const song of await Song.findAll({include: Album})) {
-	const al1 = await song.getAlbum();
-	const al2 = await Album.findOne({include: Artist, where: {name: al1.name}});
-	const artistName = await al2.getArtist();
-
-	console.log(`${song.name} by ${artistName.name} on ${al2.name}`);
+const App = async () => {
+    if (argv.addRecord) {
+        const recordObj = {
+            album: argv.album,
+            artist: argv.artist,
+            song: argv.song,
+        }
+        await addRecord(recordObj)
     }
-})();
+    else if (argv.list) {
+        await listAll()
+    }
+    else if (argv.update) {
+        await updateAlbum()
+    }
+    else if (argv.delete) {
+        await deleteAlbum()
+    }
+    else if (argv.deleteAll) {
+        await deleteAll()
+    }
+    else {
+        console.log("Wrong command")
+    }
+    console.log(addRecord);
+};
