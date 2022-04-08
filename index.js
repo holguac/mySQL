@@ -9,6 +9,7 @@ const Artist = require("./models/artist");
 const Artwork = require("./models/artwork");
 const Gallery = require("./models/gallery");
 const add = require("./utils/add");
+const deleteRecord = require("./utils/delete");
 
 const app = async (argv) => {
     await connection.sync({alter: true})
@@ -18,8 +19,7 @@ const app = async (argv) => {
             artist: argv.artist,
             artwork: argv.artwork,
             gallery: argv.gallery,
-        }
-        
+        } 
         const addRecord = await add(recordObj);
         console.log(addRecord);
     }
@@ -29,9 +29,9 @@ const app = async (argv) => {
     // else if (argv.update) {
     //     await updateArtist()
     // }
-    // else if (argv.delete) {
-    //     await deleteArtist()
-    // }
+    else if (argv.deleteRecord) {
+        await deleteRecord()
+    }
     // else if (argv.deleteAll) {
     //     await deleteAll()
     // }
