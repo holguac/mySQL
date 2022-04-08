@@ -1,19 +1,22 @@
-const Album = require("../models/album");
+const Artwork = require("../models/artwork");
 const Artist = require("../models/artist");
-const Song = require("../models/song");
+const Gallery = require("../models/gallery");
 
-const addRecord = async ({ album, artist, song }) => {
+const add = async (recordObj) => {
     try {
-        const record = new Record({
-            album,
-            artist,
-            song,
-        });
-        await record.save();
-        console.log(record, `you have added ${album}`);
-    } catch (error) {
-        console.log(error);
-    }
-};
+        const findArtist = await Artist.findOne({where: {artist: recordObj.artist}});
+        const gallery = await Gallery.create({ gallery: recordObj.gallery });
+        const artwork = await Artwork.create({ artwork: recordObj.artwork, GalleryId: gallery.id });
+        const artist = await Artist.create({
+        artist: recordObj.artist,
+        ArtworkId: artwork.id,
+      });
+      return { artist, artwork, gallery };
 
-module.exports = addRecord;
+      console.log("Record added"); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+module.exports = add;

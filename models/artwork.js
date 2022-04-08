@@ -1,9 +1,9 @@
 const { DataTypes } = require("sequelize");
 const db = require("../connection");
-const Album = require("./album");
+const Artist = require("./artist");
 
-const Song = db.define("Song", {
-    name: {
+const Artwork = db.define("Artwork", {
+    artwork: {
 	type: DataTypes.STRING,
 	allowNull: false,
 	unique: true
@@ -12,6 +12,6 @@ const Song = db.define("Song", {
     indexed: [{unique: true, fields: ["name"]}]
 });
 
-Song.belongsTo(Album);
+// Artwork.hasOne(Artist);
 
-module.exports = Song;
+module.exports = Artwork;

@@ -1,17 +1,15 @@
 const { DataTypes } = require("sequelize");
 const db = require("../connection");
-const Artist = require("./artist");
+const Artwork = require("./artwork");
 
-const Album = db.define("Album", {
-    name: {
+const Gallery = db.define("Gallery", {
+    gallery: {
 	type: DataTypes.STRING,
 	allowNull: false,
-	unique: true
+	unique: false
     }
 }, {
     indexed: [{unique: true, fields: ["name"]}]
 });
 
-Album.belongsTo(Artist);
-
-module.exports = Album;
+module.exports = Gallery;
