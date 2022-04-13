@@ -5,12 +5,12 @@ const { addRecord, list, update, deleteOne, deleteAll, find } = require('./metho
 
 const app = async () => {
     if (argv.add) {
-        const filmObj = {
+        const recordObj = {
             artwork: argv.artowrk,
             artist: argv.artist,
             gallery: argv.gallery
         }
-        await addRecord(filmObj)
+        await addRecord(recordObj)
     }
     else if (argv.list) {
         await list()
@@ -28,7 +28,7 @@ const app = async () => {
         await deleteAll()
     }
     else {
-        console.log("Wrong Command Loser!")
+        console.log("ERROR")
     }
 };
 

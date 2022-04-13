@@ -1,18 +1,19 @@
 
-const sequelize = require('./connection');
-const { DataTypes } = require('sequelize');
+const sequelize = require("./connection");
+const { DataTypes } = require("sequelize");
 
-const Record = sequelize.define('Art', {
+const Record = sequelize.define("Art", {
     artwork: {
-        type : DataTypes.STRING,
-        allowNull : false
+        type: DataTypes.STRING,
+        allowNull: true
     },
     artist: {
-        type : DataTypes.STRING,
-        allowNull : false
+        type: DataTypes.STRING,
+        allowNull: true
     },
     gallery: {
-        type : DataTypes.INTEGER,
+        type: DataTypes.STRING,
+        allowNull: true
     }
 })
 

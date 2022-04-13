@@ -3,16 +3,17 @@ const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 
-//ADD RECORD
-exports.addRecord = async (filmObj) => {
+// ADD RECORD
+exports.addRecord = async (recordObj) => {
     try{
         await Record.sync();
-        await Record.create(filmObj);
+        await Record.create(recordObj);
     } catch (error) {
         console.log(error);
     }
 };
-//LIST
+
+// LIST
 exports.list = async () => {
     try{
         const listOfArtworks = await Record.findAll();
@@ -21,7 +22,8 @@ exports.list = async () => {
         console.log(error);
     }
 };
-//LIST W/ PARAMETERS
+
+// LIST RECORD
 exports.find = async () => {
 	try {
 		if (argv.artwork) {
@@ -49,13 +51,14 @@ exports.find = async () => {
 			console.log(findThis);
 		}
 		else {
-			console.log('Nothing to find, lmao!')
+			console.log("NOTHING TO SEE HERE")
 		}
 	} catch (error) {
 		console.log(error)
 	}
 }
-//UPDATE
+
+// UPDATE RECORD
 exports.update = async () => {
     try {
         if (argv.newArtwork) {
@@ -80,13 +83,14 @@ exports.update = async () => {
 			})
 		}
 		else {
-			console.log("update error");
+			console.log("ERROR UPDATING");
 		}
 	} catch (error) {
 		console.log(error);
 	}
 };
-//DELETE ONE
+
+// DELETE ONE
 exports.deleteOne = async () => {
 	try {
 		if (argv.artwork) {
@@ -111,13 +115,14 @@ exports.deleteOne = async () => {
 			})
 		}
 		else {
-			console.log('deleted some data');
+			console.log('DELETED');
 		}
 	} catch (error) {
 		console.log(error)
 	}
 }
-//DELETE EVERYTHING
+
+// DELETE ALL
 exports.deleteAll = async () => {
 	try {
 		await Record.destroy(
@@ -125,7 +130,7 @@ exports.deleteAll = async () => {
 				truncate : true
 			}
 		)
-		console.log('everything is destroyed!!!')
+		console.log("EVERYTHING IS GONE")
 	} catch (error) {
 		console.log(error)
 	}
